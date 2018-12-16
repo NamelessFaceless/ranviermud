@@ -1,0 +1,54 @@
+[submodule "bundles/bundle-example-areas"]
+	path = bundles/bundle-example-areas
+	url = https://github.com/ranviermud/bundle-example-areas
+[submodule "bundles/bundle-example-bugreport"]
+	path = bundles/bundle-example-bugreport
+	url = https://github.com/ranviermud/bundle-example-bugreport
+[submodule "bundles/bundle-example-channels"]
+	path = bundles/bundle-example-channels
+	url = https://github.com/ranviermud/bundle-example-channels
+[submodule "bundles/bundle-example-classes"]
+	path = bundles/bundle-example-classes
+	url = https://github.com/ranviermud/bundle-example-classes
+[submodule "bundles/bundle-example-combat"]
+	path = bundles/bundle-example-combat
+	url = https://github.com/ranviermud/bundle-example-combat
+[submodule "bundles/bundle-example-commands"]
+	path = bundles/bundle-example-commands
+	url = https://github.com/ranviermud/bundle-example-commands
+[submodule "bundles/bundle-example-crafting"]
+	path = bundles/bundle-example-crafting
+	url = https://github.com/ranviermud/bundle-example-crafting
+[submodule "bundles/bundle-example-debug"]
+	path = bundles/bundle-example-debug
+	url = https://github.com/ranviermud/bundle-example-debug
+[submodule "bundles/bundle-example-effects"]
+	path = bundles/bundle-example-effects
+	url = https://github.com/ranviermud/bundle-example-effects
+[submodule "bundles/bundle-example-groups"]
+	path = bundles/bundle-example-groups
+	url = https://github.com/ranviermud/bundle-example-groups
+[submodule "bundles/bundle-example-input-events"]
+	path = bundles/bundle-example-input-events
+	url = https://github.com/ranviermud/bundle-example-input-events
+[submodule "bundles/bundle-example-lib"]
+	path = bundles/bundle-example-lib
+	url = https://github.com/ranviermud/bundle-example-lib
+[submodule "bundles/bundle-example-npc-behaviors"]
+	path = bundles/bundle-example-npc-behaviors
+	url = https://github.com/ranviermud/bundle-example-npc-behaviors
+[submodule "bundles/bundle-example-player-events"]
+	path = bundles/bundle-example-player-events
+	url = https://github.com/ranviermud/bundle-example-player-events
+[submodule "bundles/bundle-example-quests"]
+	path = bundles/bundle-example-quests
+	url = https://github.com/ranviermud/bundle-example-quests
+[submodule "bundles/bundle-example-telnet"]
+	path = bundles/bundle-example-telnet
+	url = https://github.com/ranviermud/bundle-example-telnet
+[submodule "bundles/bundle-example-vendors"]
+	path = bundles/bundle-example-vendors
+	url = https://github.com/ranviermud/bundle-example-vendors
+[submodule "bundles/bundle-example-websocket"]
+	path = bundles/bundle-example-websocket
+	url = https://github.com/ranviermud/bundle-example-websocket
