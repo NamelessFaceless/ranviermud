@@ -13,8 +13,8 @@ module.exports = {
       account: args.account,
     });
 
-    for (const attr in args.att[0]) {
-      player.addAttribute(state.AttributeFactory.create(attr, args.att[0][attr]));
+    for (let attr in args.attributes) {
+      player.addAttribute(state.AttributeFactory.create(attr, args.attributes[attr]));
     }
 
     args.account.addCharacter(args.name);

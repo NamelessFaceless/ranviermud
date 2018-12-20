@@ -10,8 +10,8 @@ module.exports = {
       const say = EventUtil.genSay(socket);
       const write  = EventUtil.genWrite(socket);
 
-      // Every stat starts at 0, except for hp
-      const attributes = {
+      // Every stat starts at 0, except for hp.
+      const startingAttributes = {
         health: 100,
         strength: 0,
         endurance: 0,
@@ -22,50 +22,70 @@ module.exports = {
         intellect: 0,
       };
 
-      // Sets the limit of attributes that should be spent and the amount of remaining points.
-      const attributeLimit = 100;
-      let remainingPoints = 100;
-
       /* Player point distribution menu
         * Can select a stat and distribute x amount of points
       */
-      say(' Select an attribute to allocate points to')
-      if(args.att === undefined) {
-        for (const stat in attributes) {
-          say(`${stat}: ${attributes[stat]}`);
-        }
+      say(' \r\n------------------------------');
+      say(' |    Attribute Allocation');
+      say(' ------------------------------');
+      say(' TIP: You can type \'statname, amount\' to increase the stat.');
+      say(' TIP: E.g: \'health, 5\'');
+
+      /* This basically sets all the settings that need to be passed between 'choose-attributes' and 'distribute-attribute.'
+      * Checks if the `args.attributes` object exists -- If it doesn't, it copies the object from the startingAttributes variable,
+      * and assigns the attributeLimit, together with remainingPoints.
+      */
+      if(args.attributes === undefined) {
+        args.attributes = Object.assign({}, startingAttributes);
+        args.attributeLimit = 100;
+        args.remainingPoints = 100;
       }
-      else {
-        for(const stat in args.att[0]) {
-          say(`${stat}: ${args.att[0][stat]}`);
-        }
+      
+      say(`You have ${args.remainingPoints} left out of ${args.attributeLimit}.`);
+
+      for (const stat in args.attributes) {
+        say(`   ${stat.charAt(0).toUpperCase() + stat.slice(1)}: ${args.attributes[stat]}`);
       }
+      say('');
       write('> ');
       
       socket.once('data', choice => {
-        choice = choice.toString().trim();
-        if(attributes.hasOwnProperty(choice) && args.att === undefined && choice !== 'done') {
-          args.att = [];
-          args.att.push(attributes);
-          args.chosenAttribute = choice;
-          return socket.emit('distribute-attribute', socket, args);
+        choice = choice.includes(',') ? choice.toString().trim().split(',') : choice.toString().trim();
+
+        if(choice instanceof Array) {
+          if(args.attributes.hasOwnProperty(choice[0])) {
+            if(args.remainingPoints >= choice[1]) {
+              args.chosenAttribute = choice[0];
+              args.attributes[args.chosenAttribute] += parseInt(choice[1]);
+
+              if(args.attributes[args.chosenAttribute] < 0) {
+                args.attributes[args.chosenAttribute] = 0;
+                say(' <b> You can\'t reduce attributes below the minimum amount. </b>');
+              }
+              else
+                args.remainingPoints -= parseInt(choice[1]);
+            }
+            else {
+              say(' <b>Not enough points left.</b>');
+            }
+            return socket.emit('choose-attributes', socket, args);
+          }
+        }
+        else {
+          if(args.attributes.hasOwnProperty(choice)) {
+            args.chosenAttribute = choice;
+
+            return socket.emit('distribute-attribute', socket, args);
+          }
         }
 
-        if(args.att[0].hasOwnProperty(choice) && args.att.length === 1 && choice !== 'done') {
-          args.chosenAttribute = choice;
-          return socket.emit('distribute-attribute', socket, args);
-        }
-
-        if(!attributes.hasOwnProperty(choice) && choice!== 'done') {
-          say('<b>Invalid attribute choice</b>');
+        if(!args.attributes.hasOwnProperty(choice) && choice !== 'done' || args.attributes.hasOwnProperty(choice[0] && choice !== 'done')) {
+          say('');
+          say('<b> Invalid attribute choice, please type one of the listed attributes.</b>');
           return socket.emit('choose-attributes', socket, args);
         }
 
-        if(attributes.hasOwnProperty(choice) && args.att.length === 1 && choice!== 'done') {
-          return socket.emit('choose-attributes', socket, args);
-        }
-
-        if(!choice) {
+        if(choice !== 'done' || !choice) {
           return socket.emit('choose-attributes', socket, args);
         }
 
