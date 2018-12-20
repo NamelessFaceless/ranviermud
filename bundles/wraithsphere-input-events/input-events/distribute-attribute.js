@@ -18,7 +18,8 @@ module.exports = {
       if(choice === '0') {
         return socket.emit('choose-attributes', socket, args);
       }
-
+      
+      // Checks if it's a Integer, converted from a string -- If not, just tells the user the value is invalid and re-sends it.
       if(parseInt(choice)) {
         let increaseBy = parseInt(choice);
         args.att[0][args.chosenAttribute] += increaseBy;
